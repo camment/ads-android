@@ -54,7 +54,7 @@ public class BannerXmlActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(CMABanner banner) {
                     if (banner != null) {
-                        BannerXmlActivity.this.bannerView.setBanner(banner);
+                        bannerView.setBanner(banner);
                     }
                 }
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_dark"
-    tools:context=".MainActivity">
+    tools:context=".BannerDynamicActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -18,13 +18,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Banner added dynamically" />
+            android:text="@string/banner_added_dynamically" />
 
         <Button
             android:id="@+id/btn_get_banner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Get banner" />
+            android:text="@string/get_banner" />
 
     </LinearLayout>
 

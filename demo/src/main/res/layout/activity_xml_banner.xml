@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_dark"
-    tools:context=".MainActivity">
+    tools:context=".BannerXmlActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Banner added in xml" />
+        android:text="@string/banner_added_in_xml" />
 
     <tv.camment.cammentads.CMABannerView
         android:id="@+id/bannerView"
