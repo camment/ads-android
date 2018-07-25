@@ -1,0 +1,107 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+
+android {
+    compileSdkVersion 27
+
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    resourcePrefix 'cmmad_'
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1000
+        versionName "1.0.0"
+
+        defaultPublishConfig 'release'
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            useProguard false
+            debuggable true
+        }
+
+        release {
+            minifyEnabled false
+            useProguard true
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
+}
+
+ext {
+    supportLibVersion = rootProject.ext.supportLibVersion
+    glideVersion = '4.7.1'
+    gsonVersion = '2.8.5'
+
+    otherDependencies = [
+            gson            : "com.google.code.gson:gson:${gsonVersion}",
+    ]
+
+    glideDependencies = [
+            glide           : "com.github.bumptech.glide:glide:${glideVersion}",
+            glideCompiler   : "com.github.bumptech.glide:compiler:${glideVersion}",
+    ]
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+
+    api otherDependencies.values()
+
+    api glideDependencies.glide
+    annotationProcessor glideDependencies.glideCompiler
+
+    compileOnly 'tv.camment.cammentsdk:cammentsdk:3.0.2@aar'
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+publishing {
+
+    def RELEASE_VERSION = 1
+
+    def MAJOR_VERSION = 0
+
+    def MINOR_VERSION = 0
+
+    publications {
+        maven(MavenPublication) {
+            groupId 'tv.camment.cammentads'
+            artifactId 'cammentads'
+            version RELEASE_VERSION + "." + MAJOR_VERSION + "." + MINOR_VERSION
+            artifact "$buildDir/outputs/aar/cammentads-release.aar"
+
+            //generate pom nodes for dependencies
+            pom.withXml {
+                def dependenciesNode = asNode().appendNode('dependencies')
+                configurations.api.allDependencies.each { dependency ->
+                    if (dependency.name != "unspecified") {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', dependency.group)
+                        dependencyNode.appendNode('artifactId', dependency.name)
+                        dependencyNode.appendNode('version', dependency.version)
+                    }
+                }
+            }
+        }
+    }
+
+    //publish to filesystem repo
+    repositories {
+        maven {
+            url "$buildDir/repo"
+        }
+    }
+}
