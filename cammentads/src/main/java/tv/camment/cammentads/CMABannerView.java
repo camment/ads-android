@@ -157,6 +157,8 @@ public class CMABannerView extends FrameLayout {
         Glide.with(this).asBitmap().load(banner.getImageUrl()).listener(new RequestListener<Bitmap>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                bannerTimeLeft = -1;
+
                 notifyHideBannerListener();
 
                 return true;
@@ -191,6 +193,8 @@ public class CMABannerView extends FrameLayout {
     private void handleBannerTime() {
         if (bannerTimeLeft <= 0) {
             if (getVisibility() == VISIBLE) {
+                bannerTimeLeft = -1;
+
                 notifyHideBannerListener();
             }
         } else {

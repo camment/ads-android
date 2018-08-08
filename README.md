@@ -1,5 +1,5 @@
 # CammentAds for Android
-**current version: 1.0.0**
+**current version: 1.0.1**
 
 To get started with the CammentAds for Android you can use the existing demo application project, or you can use the library in your existing project. 
 
