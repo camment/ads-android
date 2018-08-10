@@ -29,13 +29,18 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
+import tv.camment.cammentads.counter.CMABannerProgressView;
+
 /**
  * A view displaying image banner ad with properties defined by {@link CMABanner} model
  */
 public class CMABannerView extends FrameLayout {
 
+    private static final int TIMER_STEP = 500;
+
     private ImageView ivAd;
     private ContentLoadingProgressBar clProgressBar;
+    private CMABannerProgressView bannerProgressView;
 
     private CMABanner banner;
     private int bannerTimeLeft = -1;
@@ -82,6 +87,8 @@ public class CMABannerView extends FrameLayout {
                 .setColorFilter(ResourcesCompat.getColor(getResources(), android.R.color.white, context.getTheme()),
                         PorterDuff.Mode.SRC_IN);
 
+        bannerProgressView = findViewById(R.id.cmmad_bannerProgressView);
+
         setVisibility(GONE);
     }
 
@@ -91,12 +98,20 @@ public class CMABannerView extends FrameLayout {
         if (handler != null) {
             handler.removeCallbacksAndMessages(null);
         }
+
+        if (bannerProgressView != null) {
+            bannerProgressView.stopSpinning();
+        }
     }
 
     public void onResume() {
         if (banner != null
                 && !bannerTimeHandled) {
             handleBannerTime();
+
+            if (bannerProgressView != null) {
+                bannerProgressView.setValueAnimated(Math.round(bannerTimeLeft / 1000), 0, bannerTimeLeft);
+            }
         }
     }
 
@@ -152,6 +167,8 @@ public class CMABannerView extends FrameLayout {
 
         notifyBannerDisplayedListener();
 
+        bannerProgressView.setMaxValue(banner.getTimeToShow());
+
         clProgressBar.show();
 
         Glide.with(this).asBitmap().load(banner.getImageUrl()).listener(new RequestListener<Bitmap>() {
@@ -172,6 +189,8 @@ public class CMABannerView extends FrameLayout {
 
                 bannerTimeHandled = true;
                 handleBannerTime();
+
+                bannerProgressView.setValueAnimated(Math.round(bannerTimeLeft / 1000), 0, bannerTimeLeft);
 
                 return true;
             }
@@ -201,11 +220,11 @@ public class CMABannerView extends FrameLayout {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    bannerTimeLeft -= 1000;
+                    bannerTimeLeft -= TIMER_STEP;
 
                     handleBannerTime();
                 }
-            }, bannerTimeLeft >= 1000 ? 1000 : bannerTimeLeft);
+            }, bannerTimeLeft >= TIMER_STEP ? TIMER_STEP : bannerTimeLeft);
         }
     }
 

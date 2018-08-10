@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:scaleType="centerInside" />
+        android:scaleType="fitCenter" />
 
     <android.support.v4.widget.ContentLoadingProgressBar
         android:id="@+id/cmmad_cl_progressbar"
@@ -19,5 +19,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="gone" />
+
+    <tv.camment.cammentads.counter.CMABannerProgressView
+        android:id="@+id/cmmad_bannerProgressView"
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom|end"
+        android:layout_width="48dp"
+        android:layout_height="48dp" />
 
 </FrameLayout>
