@@ -10,8 +10,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
 
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.2"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -30,6 +30,17 @@ android {
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'),
                     getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion '27.1.0'
+            }
         }
     }
 }

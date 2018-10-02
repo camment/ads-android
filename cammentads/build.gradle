@@ -12,8 +12,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1001
-        versionName "1.0.1"
+        versionCode 1002
+        versionName "1.0.2"
 
         defaultPublishConfig 'release'
 
@@ -74,7 +74,7 @@ publishing {
 
     def MAJOR_VERSION = 0
 
-    def MINOR_VERSION = 1
+    def MINOR_VERSION = 2
 
     publications {
         maven(MavenPublication) {

@@ -14,9 +14,9 @@ import android.os.Parcelable;
 public class CMABanner implements Parcelable {
 
     private String uuid;
-    private String imageUrl;
+    private String prerollAssetUrl;
     private String redirectUrl;
-    private int timeToShow;
+    private int prerollDuration;
 
     public CMABanner() {
 
@@ -24,25 +24,25 @@ public class CMABanner implements Parcelable {
 
     private CMABanner(Parcel in) {
         uuid = in.readString();
-        imageUrl = in.readString();
+        prerollAssetUrl = in.readString();
         redirectUrl = in.readString();
-        timeToShow = in.readInt();
+        prerollDuration = in.readInt();
     }
 
     public String getUuid() {
         return uuid;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getPrerollAssetUrl() {
+        return prerollAssetUrl;
     }
 
     public String getRedirectUrl() {
         return redirectUrl;
     }
 
-    public int getTimeToShow() {
-        return timeToShow;
+    public int getPrerollDuration() {
+        return prerollDuration;
     }
 
     public static final Creator<CMABanner> CREATOR = new Creator<CMABanner>() {
@@ -65,9 +65,9 @@ public class CMABanner implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(uuid);
-        dest.writeString(imageUrl);
+        dest.writeString(prerollAssetUrl);
         dest.writeString(redirectUrl);
-        dest.writeInt(timeToShow);
+        dest.writeInt(prerollDuration);
     }
 
 }

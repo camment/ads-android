@@ -105,7 +105,7 @@ public class CMABannerView extends FrameLayout {
 
         if (banner != null
                 && bannerTimeLeft == -1) {
-            bannerTimeLeft = banner.getTimeToShow() * 1000;
+            bannerTimeLeft = banner.getPrerollDuration() * 1000;
         }
 
         displayAd();
@@ -154,7 +154,7 @@ public class CMABannerView extends FrameLayout {
 
         clProgressBar.show();
 
-        Glide.with(this).asBitmap().load(banner.getImageUrl()).listener(new RequestListener<Bitmap>() {
+        Glide.with(this).asBitmap().load(banner.getPrerollAssetUrl()).listener(new RequestListener<Bitmap>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
                 bannerTimeLeft = -1;
